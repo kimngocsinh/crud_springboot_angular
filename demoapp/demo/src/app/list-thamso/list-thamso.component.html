@@ -1,0 +1,204 @@
+<div class="container-xl">
+    <div class="table-responsive">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2>Manage <b>ThamSo</b></h2>
+                    </div>
+                    <div class=" col-sm-6">
+                        
+                        <form #searchForm="ngForm" role="search" class="form-inline my-2 my-lg-0 float-right">
+                            <input class="form-control mr-sm-2" name="name" #name (keyup)="gotoPage(name.value)"  type="search" value="" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success" type="button" (click)="gotoPage(name.value)" >Search</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="navbar">
+                    <div>
+                        <a href="#addThamSoModal" routerLink="/add" class="new-thamso btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New ThamSo</span></a> 
+                   </div>
+                  <!-- <div>
+                    <select class="form-select form-select-lg mb-3 " aria-label=".form-select-lg example">
+                        <option selected>Sắp xếp</option>
+                        <option value="1">Mã tham số</option>
+                        <option value="2">Tên tham số</option>
+                        <option value="3">Mô tả</option>
+                      </select>
+                  </div> -->
+                  
+                  <div class="search-date ">
+                    <div class="search-date-item ">
+                        <span>Từ ngày: &nbsp; </span>
+                        <input type="date" name="" id="" [(ngModel)]="startDate" (change)="searchStartDate(startDate)">
+                    </div>
+
+                    &nbsp;&nbsp;&nbsp;
+
+                    <div class="search-date-item ">
+                        <span>Đến ngày: &nbsp;</span>
+                        <input type="date" name="" id="" [(ngModel)]="endDate" (change)="searchEndDate(endDate)">
+                    </div>
+                  </div>
+                 
+                </div>
+            </div>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Mã Tham Số</th>
+                        <th>Tên Tham Số</th>
+                        <th>Loại Tham Số</th>
+                        <th>Mô tả</th>
+                        <th>Ngày tạo</th>
+                        <th>Người tạo</th>
+                        <th>Ngày sửa</th>
+                        <th>người sửa</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr *ngFor="let thamso of thamsoList.content">
+                        <td>{{thamso.id}}</td>
+                        <td>{{thamso.maThamSo}}</td>
+                        <td>{{thamso.tenThamSo}}</td>
+                        <td>{{thamso.loaiThamSo}}</td>
+                        <td>{{thamso.moTa}}</td>
+                        <td>{{thamso.ngayTao}}</td>
+                        <td>{{thamso.nguoiTao}}</td>
+                        <td>{{thamso.ngaySua}}</td>
+                        <td>{{thamso.nguoiSua}}</td>
+                        <td>
+                            <a href="#editThamSoModal{{thamso.id}}" class="edit" data-toggle="modal"><i class="material-icons" style="color: yellow;" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                            <a href="#deleteThamSoModal{{thamso.id}}" class="delete " data-toggle="modal"><i class="material-icons " style="color: red;" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                        </td>
+
+                        <!-- Edit Modal HTML -->
+                        <div id="editThamSoModal{{thamso.id}}" class="modal fade">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form #editForm="ngForm">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Edit ThamSo</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                    <label>Ma ThamSo</label>
+                                    <input ngModel="{{thamso.maThamSo}}" name="maThamSo" type="text" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                    <label>Ten ThamSo</label>
+                                    <input  ngModel="{{thamso.tenThamSo}}" name="tenThamSo" type="email" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                    <label>Loai ThamSo</label>
+                                    <textarea  ngModel="{{thamso.loaiThamSo}}" name="loaiThamSo" class="form-control" required></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                    <label>Mo ta</label>
+                                    <input  ngModel="{{thamso.moTa}}" name="moTa" type="text" class="form-control" required>
+                                    </div>
+                                    
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                                    <input type="submit" (click)="updateThamSo(editForm,thamso.id)" data-dismiss="modal" class="btn btn-info" value="Save">
+                                </div>
+                                </form>
+                            </div>
+                            </div>
+                        </div>
+                        <!-- Delete Modal HTML -->
+                        <div id="deleteThamSoModal{{thamso.id}}" class="modal fade">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form>
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Delete ThamSo</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Are you sure you want to delete {{thamso.tenThamSo}}?</p>
+                                    <p class="text-warning"><small>This action cannot be undone.</small></p>
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                                    <input type="button" class="btn btn-danger" data-dismiss="modal" value="Delete" (click)="DeleteThamSo(thamso?.id)">
+                                </div>
+                                </form>
+                            </div>
+                            </div>
+                        </div>
+
+                    </tr>
+
+                </tbody>
+            </table>
+
+            <div class="clearfix">
+                <div class="hint-text">Showing <b>{{thamsoList.size}}</b> out of <b>{{thamsoList.totalElements}}</b> entries</div>
+            
+                <nav aria-label="...">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item" [ngClass]="CurrentPage==0?'disabled':''"><button class="page-link"(click)="handleNext(name.value,CurrentPage-1)" [disabled]="CurrentPage==0?true:false">&laquo; Previous</button></li>
+                        <li class="page-item" *ngFor="let pageNumber of [].constructor(thamsoList.totalPages),let i=index"
+                        (click)="gotoPage(name.value,i)"
+                        [ngClass]="CurrentPage==i?'active':''" >
+                            <button class="page-link">{{i+1}}</button>
+                        </li>
+                       
+                        <li class="page-item" [ngClass]="CurrentPage==(thamsoList.totalPages-1)?'disabled':''"><button class="page-link"(click)="handleNext(name.value,CurrentPage+1)" [disabled]="CurrentPage==(thamsoList.totalPages-1)?true:false">Next &raquo;</button></li>
+                    </ul>
+                  </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="addThamSoModal" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form #addForm="ngForm" >
+				<div class="modal-header">
+					<h4 class="modal-title">Add ThamSo</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">
+                    <div class="form-group">
+                    <label>Ma ThamSo</label>
+                    <input ngModel name="maThamSo" type="text" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                    <label>Ten ThamSo</label>
+                    <input  ngModel name="tenThamSo" type="email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                    <label>Loai ThamSo</label>
+                    <textarea  ngModel name="loaiThamSo" class="form-control" required></textarea>
+                    </div>
+                    <div class="form-group">
+                    <label>Mo ta</label>
+                    <input  ngModel name="moTa" type="text" class="form-control" required>
+                    </div>
+                    
+                </div>
+				<div class="modal-footer">
+					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+					<input type="submit" (click)="addThamSo(addForm)" class="btn btn-success" data-dismiss="modal" value="Add">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+
+<!-- href="#addThamSoModal" -->
+<!-- (keyup)="gotoPage(name.value)" -->
+<!-- (click)="gotoPage(name.value)" -->
+
+
+

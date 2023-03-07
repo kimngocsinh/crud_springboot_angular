@@ -1,0 +1,53 @@
+<div class="form-add container-lg shadow p-3 mb-5 bg-white rounded">
+    <form #addForm="ngForm" (ngSubmit)="addThamSo(addForm)">
+        <div class="modal-header">
+            <h4 class="modal-title">Add ThamSo</h4>
+            
+        </div>
+        <div class="modal-body">
+            <div class="form-group">       
+                <label><b>Ma ThamSo</b></label>
+                <input ngModel name="maThamSo" type="text" class="form-control" [(ngModel)]="thamso.maThamSo" #maThamSo="ngModel" required minlength="4" >
+                <div *ngIf="maThamSo.invalid && (maThamSo.dirty || maThamSo.touched)" class="alert">
+
+                    <div *ngIf="maThamSo.errors?.['required']">
+                        <p class="text-err">* Ma tham so is required.</p> 
+                    </div>
+                    <div *ngIf="maThamSo.errors?.['minlength']">
+                       <p class="text-err"> Name must be at least 4 characters long.</p>
+                    </div>
+                
+                </div>
+                
+            </div>
+            <div class="form-group">
+            <label><b>Ten ThamSo</b></label>
+            <input  ngModel name="tenThamSo" type="email" class="form-control" [(ngModel)]="thamso.tenThamSo" #tenThamSo="ngModel" required minlength="4">
+                <div *ngIf="tenThamSo.invalid && (tenThamSo.dirty || tenThamSo.touched)" class="alert">
+
+                    <div *ngIf="tenThamSo.errors?.['required']">
+                        <p class="text-err">* Ten tham so is required.</p> 
+                    </div>
+                    <div *ngIf="tenThamSo.errors?.['minlength']">
+                    <p class="text-err"> Ten tham so must be at least 4 characters long.</p>
+                    </div>
+                
+                </div>
+            </div>
+            <div class="form-group">
+            <label><b>Loai ThamSo</b> </label>
+            <input ngModel name="loaiThamSo" class="form-control" required>
+            </div>
+            <div class="form-group">
+            <label><b>Mo ta</b></label>
+            <textarea ngModel name="moTa" type="text" class="form-control" required></textarea>
+            </div>
+            
+        </div>
+        <div class="modal-footer">
+            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" routerLink="">
+            <!-- <input type="submit"  class="btn btn-success" data-dismiss="modal" value="Add" routerLink=""> -->
+            <input type="submit" [disabled]="addForm.invalid" (click)="addThamSo(addForm)" class="btn btn-success" data-dismiss="modal" value="Add" routerLink="">
+        </div>
+    </form>
+</div>

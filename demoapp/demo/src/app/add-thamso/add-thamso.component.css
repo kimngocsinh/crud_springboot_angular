@@ -1,0 +1,8 @@
+.form-add{
+    width: 600px;
+    
+    background-color: rgb(224, 224, 224);
+}
+.text-err{
+    color: red;
+}
